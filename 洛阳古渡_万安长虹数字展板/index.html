@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>洛阳古渡·万安长虹 — 泉州洛阳桥数字文化展板</title>
+  <meta name="description" content="2026年4C大赛·第7大类·数媒静态设计参赛作品。以宋代绢帛长卷的视觉语言，展现中国第一座跨海大石桥——泉州洛阳桥的千年传奇。">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- 进度条 -->
+<div class="progress-track"><div class="progress-fill"></div></div>
+
+<!-- 滚动提示 -->
+<div class="scroll-hint">↓ 滚轮横移 ↓</div>
+
+<!-- 导航点 -->
+<nav class="nav-dots">
+  <button class="nav-dot nav-dot--active" title="卷首"></button>
+  <button class="nav-dot" title="造桥者"></button>
+  <button class="nav-dot" title="四大工法"></button>
+  <button class="nav-dot" title="结构剖面"></button>
+  <button class="nav-dot" title="文化传承"></button>
+  <button class="nav-dot" title="卷尾"></button>
+</nav>
+
+<!-- ==================== 长卷主体 ==================== -->
+<div class="scroll-container">
+
+  <!-- ===== 第一面：卷首 ===== -->
+  <section class="panel panel--title">
+    <div class="seal-border"></div>
+    <div class="seal-border-inner"></div>
+    <div class="parallax-layer parallax-layer--clouds" data-speed="0.15"></div>
+    <span class="corner-mark corner-mark--tl">北宋·皇祐五年至嘉祐四年<br>公元1053—1059</span>
+    <span class="corner-mark corner-mark--br">泉州洛阳江<br>入海口</span>
+    <div class="title-vertical reveal">
+      洛阳古渡<br>万安長虹
+    </div>
+    <p class="title-subtitle reveal reveal--delay-1">
+      中国第一座跨海大石桥 · 泉州洛阳桥数字文化展板
+    </p>
+    <div class="seal-stamp reveal reveal--delay-2">蔡襄<br>督造</div>
+  </section>
+
+  <!-- ===== 第二面：造桥者蔡襄 ===== -->
+  <section class="panel panel--history">
+    <div class="parallax-layer parallax-layer--mountains" data-speed="0.25"></div>
+    <div class="history-layout">
+      <div class="history-portrait reveal">
+        <div class="portrait-frame">
+          <div class="portrait-icon">👤</div>
+        </div>
+        <div class="portrait-name reveal reveal--delay-1">蔡 襄</div>
+        <div class="portrait-title reveal reveal--delay-2">字君谟 · 福建仙游人 · 1012—1067</div>
+      </div>
+      <div class="history-text">
+        <h2 class="reveal">造桥者<span class="dot"></span>蔡襄</h2>
+        <p class="reveal reveal--delay-1">
+          蔡襄，北宋名臣，书法家（"宋四家"之一），两度出任泉州知府。皇祐五年（1053年），他面对洛阳江"水阔五里、波涛滚滚"的天险渡口，毅然决心建桥利民，动员泉州士绅集资一千四百万缗。
+        </p>
+        <p class="reveal reveal--delay-2">
+          历时六年有余，蔡襄主持完成了这座跨海大桥的建造，开创了"筏型基础"与"种蛎固基"两项划时代的工程技术，比西方同类技术早了约七百年。
+        </p>
+        <div class="history-quote reveal reveal--delay-3">
+          "洛阳之桥天下奇，<br>飞虹千丈横江湄。"
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 第三面：四大工法 ===== -->
+  <section class="panel panel--engineering">
+    <div class="parallax-layer parallax-layer--clouds" data-speed="0.2"></div>
+    <div class="engineering-layout">
+      <h2 class="engineering-title reveal">
+        四大工程创举
+        <span class="line"></span>
+      </h2>
+      <div class="methods-grid">
+        <div class="method-card reveal reveal--delay-1" data-num="壹">
+          <div class="method-icon">🪨</div>
+          <div class="method-name">筏型基础</div>
+          <div class="method-en">Raft Foundation</div>
+          <p class="method-desc">在江底沿桥轴线抛填大量石块形成宽约<strong>25米</strong>、长约<strong>500米</strong>的水下石堤，使桥墩荷载均匀分布于整个基底面上。</p>
+          <span class="method-highlight">比西方早约700年</span>
+        </div>
+        <div class="method-card reveal reveal--delay-2" data-num="贰">
+          <div class="method-icon">🦪</div>
+          <div class="method-name">种蛎固基法</div>
+          <div class="method-en">Oyster Cementation</div>
+          <p class="method-desc">利用牡蛎的天然附着特性，在桥基石堤上人工养殖牡蛎。牡蛎分泌的<strong>钙质</strong>将散石胶结为坚固整体——天然"生物水泥"。</p>
+          <span class="method-highlight">人类首个生物+工程融合</span>
+        </div>
+        <div class="method-card reveal reveal--delay-3" data-num="叁">
+          <div class="method-icon">⛵</div>
+          <div class="method-name">船形桥墩</div>
+          <div class="method-en">Boat-shaped Pier</div>
+          <p class="method-desc">46座桥墩两端削尖如船首尾，有效分解潮水冲击力，降低冲击力约<strong>40%</strong>，是古代流体力学的精妙实践。</p>
+          <span class="method-highlight">古代流体力学典范</span>
+        </div>
+        <div class="method-card reveal reveal--delay-4" data-num="肆">
+          <div class="method-icon">🌊</div>
+          <div class="method-name">浮运架梁法</div>
+          <div class="method-en">Floating Crane</div>
+          <p class="method-desc">退潮时将石板梁放于双船之上，涨潮时船只升高运至墩位上方，退潮后石梁精准落座。以天地之力代替人工起重。</p>
+          <span class="method-highlight">巧借自然潮汐之力</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 第四面：结构剖面 ===== -->
+  <section class="panel panel--structure">
+    <div class="parallax-layer parallax-layer--mountains" data-speed="0.3"></div>
+    <div class="structure-layout">
+      <h2 class="structure-title reveal">桥梁结构六层剖面</h2>
+      <div class="bridge-diagram reveal reveal--delay-1">
+        <!-- SVG Bridge Cross Section -->
+        <svg viewBox="0 0 800 320" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <!-- Sky -->
+          <defs>
+            <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#7aAAc0" stop-opacity="0.3"/>
+              <stop offset="100%" stop-color="#4a7a90" stop-opacity="0.4"/>
+            </linearGradient>
+          </defs>
+          <!-- Water level line -->
+          <line x1="0" y1="160" x2="800" y2="160" stroke="#7aAAc0" stroke-width="1" stroke-dasharray="8,4" opacity="0.5"/>
+          <text x="790" y="155" fill="#7aAAc0" font-size="10" text-anchor="end" font-family="Noto Serif SC">▼ 水面线</text>
+          <!-- Water body -->
+          <rect x="0" y="160" width="800" height="160" fill="url(#waterGrad)"/>
+          <!-- Layer 1: Guardrails -->
+          <rect x="200" y="60" width="400" height="18" fill="#A0937D" rx="2"/>
+          <text x="400" y="52" fill="#2a2018" font-size="11" text-anchor="middle" font-family="Noto Serif SC">① 石栏杆与石狮</text>
+          <!-- 石狮 -->
+          <rect x="250" y="55" width="8" height="22" fill="#8a836d" rx="1"/>
+          <rect x="350" y="55" width="8" height="22" fill="#8a836d" rx="1"/>
+          <rect x="450" y="55" width="8" height="22" fill="#8a836d" rx="1"/>
+          <rect x="540" y="55" width="8" height="22" fill="#8a836d" rx="1"/>
+          <!-- Layer 2: Deck -->
+          <rect x="180" y="80" width="440" height="28" fill="#8B8378" rx="2"/>
+          <text x="690" y="98" fill="#2a2018" font-size="11" text-anchor="start" font-family="Noto Serif SC">② 桥面石板梁 (25吨/块)</text>
+          <line x1="625" y1="94" x2="690" y2="94" stroke="#8a7a60" stroke-width="0.5"/>
+          <!-- Layer 3: Pier -->
+          <polygon points="320,110 480,110 510,170 530,200 470,200 330,200 270,200 290,170" fill="#6B7B8D"/>
+          <text x="400" y="155" fill="#f0e6d0" font-size="11" text-anchor="middle" font-family="Noto Serif SC">③ 船形桥墩</text>
+          <!-- Pier tip arrows -->
+          <polygon points="270,200 290,170 260,185" fill="#5a6a7d"/>
+          <polygon points="530,200 510,170 540,185" fill="#5a6a7d"/>
+          <!-- Layer 4: Oyster -->
+          <rect x="280" y="202" width="240" height="30" fill="#4E6E5D" rx="3"/>
+          <text x="400" y="222" fill="#d0e0d0" font-size="10" text-anchor="middle" font-family="Noto Serif SC">④ 牡蛎固基层</text>
+          <!-- Oyster texture dots -->
+          <circle cx="300" cy="212" r="3" fill="#6a8a6a" opacity="0.5"/>
+          <circle cx="330" cy="218" r="2.5" fill="#6a8a6a" opacity="0.4"/>
+          <circle cx="370" cy="210" r="3" fill="#6a8a6a" opacity="0.5"/>
+          <circle cx="420" cy="216" r="2" fill="#6a8a6a" opacity="0.4"/>
+          <circle cx="470" cy="212" r="3" fill="#6a8a6a" opacity="0.5"/>
+          <circle cx="500" cy="218" r="2.5" fill="#6a8a6a" opacity="0.4"/>
+          <!-- Layer 5: Raft foundation -->
+          <rect x="200" y="234" width="400" height="40" fill="#3A4A5C" rx="2"/>
+          <text x="400" y="258" fill="#a0b0c0" font-size="11" text-anchor="middle" font-family="Noto Serif SC">⑤ 筏型基础 (宽25m)</text>
+          <!-- Raft stone texture -->
+          <rect x="210" y="240" width="20" height="12" fill="#4a5a6c" rx="1"/>
+          <rect x="235" y="242" width="25" height="10" fill="#4a5a6c" rx="1"/>
+          <rect x="265" y="238" width="18" height="14" fill="#4a5a6c" rx="1"/>
+          <rect x="520" y="240" width="22" height="12" fill="#4a5a6c" rx="1"/>
+          <rect x="550" y="242" width="18" height="10" fill="#4a5a6c" rx="1"/>
+          <!-- Layer 6: Seabed -->
+          <rect x="120" y="276" width="560" height="44" fill="#2A3545" rx="2"/>
+          <text x="400" y="302" fill="#708090" font-size="11" text-anchor="middle" font-family="Noto Serif SC">⑥ 洛阳江海床</text>
+        </svg>
+      </div>
+      <div class="structure-specs">
+        <div class="spec-item reveal reveal--delay-1">
+          <div class="spec-value">834<span class="spec-unit">米</span></div>
+          <div class="spec-label">桥梁总长</div>
+        </div>
+        <div class="spec-item reveal reveal--delay-2">
+          <div class="spec-value">46<span class="spec-unit">座</span></div>
+          <div class="spec-label">船形桥墩</div>
+        </div>
+        <div class="spec-item reveal reveal--delay-3">
+          <div class="spec-value">500<span class="spec-unit">余块</span></div>
+          <div class="spec-label">石板梁</div>
+        </div>
+        <div class="spec-item reveal reveal--delay-4">
+          <div class="spec-value">6<span class="spec-unit">年</span></div>
+          <div class="spec-label">建造工期</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 第五面：文化传承 ===== -->
+  <section class="panel panel--heritage">
+    <div class="parallax-layer parallax-layer--clouds" data-speed="0.18"></div>
+    <div class="heritage-layout">
+      <h2 class="heritage-title reveal">文化传承</h2>
+      <div class="heritage-cards">
+        <div class="heritage-card reveal reveal--delay-1">
+          <div class="heritage-card__icon">🏛️</div>
+          <div class="heritage-card__title">全国重点文物保护单位</div>
+          <div class="heritage-card__year">1988</div>
+          <div class="heritage-card__desc">国务院第三批全国重点文物保护单位</div>
+        </div>
+        <div class="heritage-card reveal reveal--delay-2">
+          <div class="heritage-card__icon">🌍</div>
+          <div class="heritage-card__title">世界文化遗产</div>
+          <div class="heritage-card__year">2021</div>
+          <div class="heritage-card__desc">"泉州：宋元中国的世界海洋商贸中心"22处遗产点之一</div>
+        </div>
+        <div class="heritage-card reveal reveal--delay-3">
+          <div class="heritage-card__icon">🔧</div>
+          <div class="heritage-card__title">千年守护</div>
+          <div class="heritage-card__year">16次</div>
+          <div class="heritage-card__desc">自南宋淳熙元年（1174）至2006年，历代修缮共16次</div>
+        </div>
+      </div>
+      <div class="heritage-poem reveal reveal--delay-3">
+        洛阳之桥天下奇，飞虹千丈横江湄。<br>
+        石梁卧波连南北，万安渡口利苍生。
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 第六面：卷尾 ===== -->
+  <section class="panel panel--colophon">
+    <div class="colophon-content reveal">
+      <h2 class="colophon-title">参考文献</h2>
+      <div class="colophon-refs">
+        [1] 蔡襄.《万安桥记》. 1059年（碑文）<br>
+        [2] 泉州市文物管理委员会.《泉州洛阳桥》. 1985<br>
+        [3] 罗哲文.《中国古桥》. 1987<br>
+        [4] 唐寰澄.《中国科学技术史·桥梁卷》. 2000<br>
+        [5] UNESCO. Quanzhou: Emporium of the World in Song-Yuan China. 2021<br>
+        [6] 福建省文物局.《泉州世遗保护管理规划》. 2020
+      </div>
+      <div class="colophon-stamp">
+        洛阳桥<br>印
+      </div>
+      <p class="title-subtitle" style="margin-top:2rem;font-size:0.75rem;">
+        2026年（第19届）中国大学生计算机设计大赛 · 第7大类 · 数媒静态设计
+      </p>
+    </div>
+  </section>
+
+</div><!-- /scroll-container -->
+
+<script src="js/scroll.js"></script>
+</body>
+</html>

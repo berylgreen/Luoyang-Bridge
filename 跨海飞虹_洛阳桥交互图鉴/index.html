@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>跨海飞虹 — 泉州洛阳桥古代海洋工程交互图鉴</title>
+  <meta name="description" content="2026年中国大学生计算机设计大赛(4C)参赛作品：以交互式数据可视化方式，深度解析中国第一座跨海大石桥——泉州洛阳桥的筏型基础、种蛎固基等世界级工程创举。">
+  <meta name="keywords" content="洛阳桥,泉州,古代桥梁,信息可视化,4C大赛,种蛎固基,筏型基础,蔡襄">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+  <style>
+    /* === Hero Section Specific === */
+    .hero { position: relative; background: var(--color-primary-900); overflow: hidden; }
+    .hero__bg { position: absolute; inset: 0; z-index: 0; }
+    .hero__bg-gradient {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 80%, hsla(185, 40%, 18%, 0.35) 0%, transparent 55%),
+                  radial-gradient(ellipse at 30% 20%, hsla(42, 50%, 25%, 0.15) 0%, transparent 50%),
+                  radial-gradient(ellipse at 70% 60%, hsla(220, 50%, 12%, 0.8) 0%, transparent 70%);
+    }
+    .hero__particles { position: absolute; inset: 0; overflow: hidden; }
+    .hero__content { position: relative; z-index: 2; max-width: 900px; padding: 0 var(--space-6); }
+    .hero__badge { display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--text-xs); color: var(--color-accent-gold); letter-spacing: 0.3em; text-transform: uppercase; padding: var(--space-2) var(--space-6); border: 1px solid var(--color-border-accent); border-radius: var(--radius-full); background: hsla(42, 70%, 62%, 0.06); margin-bottom: var(--space-8); animation: heroSubtitleFade 1s var(--ease-out-expo) 0.1s both; }
+    .hero__title { font-size: clamp(2.5rem, 7vw, 5rem); font-weight: var(--weight-black); color: var(--color-text-primary); line-height: 1.15; margin-bottom: var(--space-4); }
+    .hero__title .accent { color: var(--color-accent-gold); }
+    .hero__desc { font-family: var(--font-serif); font-size: var(--text-xl); color: var(--color-text-secondary); max-width: 650px; margin: 0 auto var(--space-10); line-height: var(--leading-relaxed); }
+    /* === Oyster Animation === */
+    .oyster-anim { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-xl); padding: var(--space-8); position: relative; overflow: hidden; }
+    .oyster-anim::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, hsla(42,70%,62%,0.2), transparent); }
+    .oyster-stage { display: none; }
+    .oyster-stage--active { display: block; animation: heroFadeIn 0.5s ease both; }
+    .oyster-stage__title { font-family: var(--font-serif); font-size: var(--text-2xl); color: var(--color-accent-gold); margin-bottom: var(--space-3); }
+    .oyster-stage__duration { font-size: var(--text-sm); color: var(--color-tide-light); margin-bottom: var(--space-4); }
+    .oyster-stage__desc { color: var(--color-text-secondary); line-height: var(--leading-relaxed); }
+    .oyster-controls { display: flex; justify-content: center; gap: var(--space-4); margin-top: var(--space-6); }
+    .oyster-btn { background: hsla(42,70%,62%,0.1); border: 1px solid var(--color-border-accent); color: var(--color-accent-gold); padding: var(--space-2) var(--space-6); border-radius: var(--radius-full); cursor: pointer; font-family: var(--font-sans); font-size: var(--text-sm); transition: all var(--duration-fast) ease; }
+    .oyster-btn:hover { background: hsla(42,70%,62%,0.2); }
+    .oyster-progress { width: 100%; height: 3px; background: var(--color-primary-600); border-radius: var(--radius-full); margin-top: var(--space-4); overflow: hidden; }
+    .oyster-progress__fill { height: 100%; background: linear-gradient(90deg, var(--color-tide), var(--color-accent-gold)); border-radius: var(--radius-full); transition: width 0.5s var(--ease-out-expo); }
+    /* === Tide Simulation === */
+    .tide-sim { display: flex; align-items: flex-end; gap: var(--space-2); height: 200px; padding: var(--space-4); background: hsla(185,40%,15%,0.15); border-radius: var(--radius-xl); border: 1px solid var(--glass-border); }
+    .tide-bar-item { flex: 1; border-radius: var(--radius-md) var(--radius-md) 0 0; position: relative; min-width: 20px; }
+    .tide-bar-label { position: absolute; bottom: -24px; left: 50%; transform: translateX(-50%); font-size: var(--text-xs); color: var(--color-text-muted); white-space: nowrap; }
+    /* === Comparison Table Wrapper === */
+    .table-wrapper { overflow-x: auto; border-radius: var(--radius-xl); border: 1px solid var(--glass-border); background: var(--glass-bg); backdrop-filter: var(--glass-blur); }
+    .table-wrapper .data-table { min-width: 650px; }
+    /* === Reference List === */
+    .ref-list { list-style: none; }
+    .ref-list li { padding: var(--space-3) 0; border-bottom: 1px solid var(--color-divider); font-size: var(--text-sm); color: var(--color-text-secondary); display: flex; gap: var(--space-3); }
+    .ref-list__num { color: var(--color-accent-gold); font-weight: var(--weight-semibold); min-width: 24px; }
+  </style>
+</head>
+<body>
+
+<!-- ========== 导航栏 ========== -->
+<nav class="nav" id="main-nav">
+  <div class="nav__inner">
+    <div class="nav__brand">
+      <span>🌉</span>
+      <span>跨海飞虹</span>
+    </div>
+    <ul class="nav__links">
+      <li><button class="nav__link" data-section="hero">序章</button></li>
+      <li><button class="nav__link" data-section="history">造桥者</button></li>
+      <li><button class="nav__link" data-section="engineering">工程奇迹</button></li>
+      <li><button class="nav__link" data-section="tidal">潮汐力学</button></li>
+      <li><button class="nav__link" data-section="structure">结构解剖</button></li>
+      <li><button class="nav__link" data-section="heritage">文化传承</button></li>
+      <li><button class="nav__link" data-section="finale">尾声</button></li>
+    </ul>
+  </div>
+  <div class="nav__progress" style="width:0%"></div>
+</nav>
+
+<!-- ========== 篇章一：序章 ========== -->
+<section class="section section--hero hero" id="hero">
+  <div class="hero__bg">
+    <div class="hero__bg-gradient"></div>
+    <div class="ambient-bg"></div>
+    <div class="hero__particles">
+      <div class="particle" style="top:15%;left:10%;width:3px;height:3px;animation-delay:0s"></div>
+      <div class="particle" style="top:25%;left:80%;width:5px;height:5px;animation-delay:2s"></div>
+      <div class="particle" style="top:60%;left:20%;width:4px;height:4px;animation-delay:4s"></div>
+      <div class="particle" style="top:70%;left:65%;width:3px;height:3px;animation-delay:1s"></div>
+      <div class="particle" style="top:40%;left:45%;width:6px;height:6px;animation-delay:3s"></div>
+      <div class="particle" style="top:80%;left:90%;width:4px;height:4px;animation-delay:5s"></div>
+    </div>
+  </div>
+  <div class="hero__content">
+    <div class="hero__badge">2026 · 中国大学生计算机设计大赛 · 信息可视化</div>
+    <h1 class="hero__title hero__title-anim">
+      <span class="accent">跨海飞虹</span><br>
+      泉州洛阳桥<br>
+      古代海洋工程交互图鉴
+    </h1>
+    <span class="hero__line-anim"></span>
+    <p class="hero__desc hero__subtitle-anim">
+      中国第一座跨海大石桥 · 北宋蔡襄主持建造<br>
+      "筏型基础"与"种蛎固基"——人类桥梁工程史上的划时代创举
+    </p>
+    <div class="grid grid--4 hero__stats-anim" style="max-width:700px;margin:0 auto">
+      <div class="stat-card">
+        <div class="stat-card__number" data-count="1059">0</div>
+        <div class="stat-card__label">建成年份</div>
+        <div class="stat-card__sublabel">北宋嘉祐四年</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__number" data-count="834" data-suffix="m">0</div>
+        <div class="stat-card__label">桥梁全长</div>
+        <div class="stat-card__sublabel">含接岸引道</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__number" data-count="46" data-suffix="座">0</div>
+        <div class="stat-card__label">船形桥墩</div>
+        <div class="stat-card__sublabel">花岗岩干砌法</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__number" data-count="966" data-suffix="年">0</div>
+        <div class="stat-card__label">屹立至今</div>
+        <div class="stat-card__sublabel">2021年入选世遗</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <span>向下滚动探索</span>
+    <div class="scroll-indicator__arrow"></div>
+  </div>
+</section>
+
+<!-- ========== 篇章二：历史长河 ========== -->
+<section class="section section--alt" id="history">
+  <div class="container">
+    <div class="section__header reveal">
+      <span class="section__chapter-num">篇章二</span>
+      <h2 class="section__title">造桥者蔡襄</h2>
+      <p class="section__subtitle">万安渡头潮声远，千秋功业一人担</p>
+    </div>
+
+    <div class="grid grid--asymmetric" style="align-items:start">
+      <!-- 左：蔡襄简介 -->
+      <div class="reveal reveal--left">
+        <div class="card" style="margin-bottom:var(--space-8)">
+          <div class="card__icon">🖌️</div>
+          <div class="card__title">蔡襄（1012—1067）</div>
+          <p class="card__desc" style="margin-bottom:var(--space-4)">字君谟，福建仙游人。北宋名臣、书法家（宋四家之一）、农学家。<br>历任泉州知州、福州知州、开封知府等要职，一生以忠直刚正闻名。</p>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-2)">
+            <span class="badge badge--gold">泉州知府</span>
+            <span class="badge badge--tide">宋四家之一</span>
+            <span class="badge badge--copper">农学先驱</span>
+          </div>
+        </div>
+        <div class="quote">
+          <p class="quote__text">洛阳之桥天下奇，飞虹千丈横江湄。</p>
+          <p class="quote__source">—— 后人题咏洛阳桥</p>
+        </div>
+        <div class="card" style="margin-top:var(--space-8)">
+          <div class="card__title" style="font-size:var(--text-lg)">主要成就</div>
+          <ul style="list-style:none;margin-top:var(--space-4)">
+            <li style="padding:var(--space-2) 0;color:var(--color-text-secondary);font-size:var(--text-sm);border-bottom:1px solid var(--color-divider);display:flex;gap:var(--space-3)">
+              <span style="color:var(--color-accent-gold)">🌉</span> 主持建造洛阳桥，开创"筏型基础"与"种蛎固基"两大工程创举
+            </li>
+            <li style="padding:var(--space-2) 0;color:var(--color-text-secondary);font-size:var(--text-sm);border-bottom:1px solid var(--color-divider);display:flex;gap:var(--space-3)">
+              <span style="color:var(--color-accent-gold)">📖</span> 著有《荔枝谱》— 世界上第一部果树栽培学专著
+            </li>
+            <li style="padding:var(--space-2) 0;color:var(--color-text-secondary);font-size:var(--text-sm);border-bottom:1px solid var(--color-divider);display:flex;gap:var(--space-3)">
+              <span style="color:var(--color-accent-gold)">🍵</span> 改良茶叶加工工艺，著《茶录》
+            </li>
+            <li style="padding:var(--space-2) 0;color:var(--color-text-secondary);font-size:var(--text-sm);display:flex;gap:var(--space-3)">
+              <span style="color:var(--color-accent-gold)">✒️</span> 书法冠绝一时，与苏轼、黄庭坚、米芾并称"宋四家"
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 右：建造时间线 -->
+      <div class="reveal reveal--right">
+        <h3 style="font-size:var(--text-2xl);color:var(--color-text-heading);margin-bottom:var(--space-8)">建造历程时间轴</h3>
+        <div class="timeline" id="construction-timeline"></div>
+      </div>
+    </div>
+
+    <!-- 贸易数据图表 -->
+    <div class="chapter-divider reveal">
+      <span class="chapter-divider__line"></span>
+      <span class="chapter-divider__icon"></span>
+      <span class="chapter-divider__line"></span>
+    </div>
+
+    <div class="reveal" style="margin-top:var(--space-8)">
+      <div class="chart-container">
+        <div class="chart-container__title">宋代泉州港贸易繁荣与洛阳桥的关联</div>
+        <div class="chart-container__subtitle">洛阳桥建成后，泉州港贸易量飞速增长，一跃成为"东方第一大港"</div>
+        <div class="chart-box" id="chart-trade"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 篇章三：工程奇迹 ========== -->
+<section class="section section--dark" id="engineering">
+  <div class="container">
+    <div class="section__header reveal">
+      <span class="section__chapter-num">篇章三</span>
+      <h2 class="section__title">工程奇迹</h2>
+      <p class="section__subtitle">筏型基础与种蛎固基——人类桥梁史上的两大划时代创举</p>
+    </div>
+
+    <div class="grid grid--2 reveal-stagger" style="margin-bottom:var(--space-16)">
+      <div class="feature-card">
+        <span class="feature-card__number">01</span>
+        <h3 class="feature-card__title">🪨 筏型基础</h3>
+        <p class="feature-card__body">
+          在江底沿桥轴线抛填大量石块，形成宽约<strong>25米</strong>、长约<strong>500米</strong>的水下石堤。使桥墩荷载均匀分布于整个基底面上。<br><br>
+          <span class="text-gold">▸ 比西方同类技术早约700年</span>
+        </p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-card__number">02</span>
+        <h3 class="feature-card__title">🦪 种蛎固基法</h3>
+        <p class="feature-card__body">
+          利用牡蛎的天然附着特性，在桥基石堤上人工养殖牡蛎。牡蛎分泌的钙质将散落的石块自然胶结为坚固整体——天然"<strong>生物水泥</strong>"。<br><br>
+          <span class="text-gold">▸ 人类首次将生物学原理用于大型土木工程</span>
+        </p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-card__number">03</span>
+        <h3 class="feature-card__title">⛵ 船形桥墩</h3>
+        <p class="feature-card__body">
+          桥墩两端尖锐如船首尾，有效劈开水流减少冲击。实测可<strong>降低水流冲击力约40%</strong>，避免涡流对桥基的冲蚀。<br><br>
+          <span class="text-tide">▸ 古代流体力学的精妙实践</span>
+        </p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-card__number">04</span>
+        <h3 class="feature-card__title">🌊 浮运架梁法</h3>
+        <p class="feature-card__body">
+          利用潮汐涨落搬运安装重达<strong>25吨</strong>的石板梁。退潮放板于船上，涨潮自然升起，退潮精准落于墩上。<br><br>
+          <span class="text-tide">▸ 以天地之力代替人工起重</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- 种蛎固基过程动画 -->
+    <div class="reveal" style="margin-top:var(--space-8)">
+      <h3 style="text-align:center;color:var(--color-text-heading);margin-bottom:var(--space-8);font-size:var(--text-2xl)">
+        🦪 "种蛎固基"生物工程过程演示
+      </h3>
+      <div class="oyster-anim" id="oyster-animation">
+        <div class="oyster-stage oyster-stage--active">
+          <div class="oyster-stage__title">第一阶段：投放基石</div>
+          <div class="oyster-stage__duration">⏱ 工期：1-2月</div>
+          <p class="oyster-stage__desc">退潮时在桥墩周围投放大量花岗岩石块。石块之间留有缝隙，为后续牡蛎幼虫的附着提供了理想的粗糙表面。工匠们精心选择石料，确保每块石头的重量和大小适合水下堆砌。</p>
+          <div style="text-align:center;margin-top:var(--space-6);font-size:3rem;opacity:0.3">🪨🪨🪨</div>
+        </div>
+        <div class="oyster-stage">
+          <div class="oyster-stage__title">第二阶段：牡蛎附着</div>
+          <div class="oyster-stage__duration">⏱ 工期：3-6月</div>
+          <p class="oyster-stage__desc">海水中天然的牡蛎幼虫（浮游幼体）随潮水流动，自然附着于花岗岩石块表面。幼虫分泌黏液固着生长，开始形成初期的壳体。工匠也会有意投放牡蛎苗种，加速这一过程。</p>
+          <div style="text-align:center;margin-top:var(--space-6);font-size:3rem;opacity:0.3">🪨🦪🦪</div>
+        </div>
+        <div class="oyster-stage">
+          <div class="oyster-stage__title">第三阶段：生物胶结</div>
+          <div class="oyster-stage__duration">⏱ 工期：1-3年</div>
+          <p class="oyster-stage__desc">牡蛎壳不断生长增厚，其分泌的碳酸钙将周围的石块、砾石、碎石包裹并粘合在一起，形成天然的"生物水泥"。单个牡蛎壳的附着力可达数十公斤，而密集生长的牡蛎群则产生了极为可观的综合胶结力。</p>
+          <div style="text-align:center;margin-top:var(--space-6);font-size:3rem;opacity:0.3">🦪🧱🦪</div>
+        </div>
+        <div class="oyster-stage">
+          <div class="oyster-stage__title">第四阶段：永久加固</div>
+          <div class="oyster-stage__duration">⏱ 持续进行（数百年）</div>
+          <p class="oyster-stage__desc">一代代牡蛎在前代的壳体上层叠生长，桥基在漫长的时间中逐渐钙化为坚如磐石的整体。近千年后的今天，洛阳桥桥墩基部的牡蛎层厚度已达数十厘米，其综合抗压强度可达15MPa，堪比现代混凝土。</p>
+          <div style="text-align:center;margin-top:var(--space-6);font-size:3rem;opacity:0.3">🏗️✨💎</div>
+        </div>
+        <div class="oyster-progress"><div class="oyster-progress__fill" id="oyster-progress-fill" style="width:25%"></div></div>
+        <div class="oyster-controls">
+          <button class="oyster-btn" id="oyster-prev">◀ 上一步</button>
+          <button class="oyster-btn" id="oyster-next">下一步 ▶</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 力学雷达图 -->
+    <div class="grid grid--2 reveal" style="margin-top:var(--space-16)">
+      <div class="chart-container">
+        <div class="chart-container__title">工程综合评估雷达图</div>
+        <div class="chart-container__subtitle">洛阳桥 vs 同期西方桥梁工程能力对比</div>
+        <div class="chart-box" id="chart-mechanics"></div>
+      </div>
+      <div class="chart-container">
+        <div class="chart-container__title">桥梁结构材料占比</div>
+        <div class="chart-container__subtitle">洛阳桥主要建材构成分析</div>
+        <div class="chart-box" id="chart-material"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 篇章四：潮汐与力学 ========== -->
+<section class="section section--alt" id="tidal">
+  <div class="container">
+    <div class="section__header reveal">
+      <span class="section__chapter-num">篇章四</span>
+      <h2 class="section__title">潮汐与力学</h2>
+      <p class="section__subtitle">与海共生的智慧——巧借天时、顺应自然</p>
+    </div>
+
+    <div class="grid grid--2 reveal" style="margin-bottom:var(--space-12)">
+      <div>
+        <h3 style="color:var(--color-text-heading);margin-bottom:var(--space-6)">洛阳江口潮汐特征</h3>
+        <p style="color:var(--color-text-secondary);line-height:var(--leading-relaxed);margin-bottom:var(--space-6)">
+          洛阳江入海口属典型的<strong>半日潮</strong>海域，每天经历两次涨落潮。潮差范围为<strong>1.5至5.8米</strong>，涨潮时洋流速度可达<strong>3.5m/s</strong>。
+          蔡襄正是利用了这一自然规律，创造性地发明了"浮运架梁法"——以潮汐之力代替人工起重。
+        </p>
+        <div class="grid grid--2" style="gap:var(--space-4)">
+          <div class="stat-card">
+            <div class="stat-card__number" style="font-size:var(--text-3xl)">5.8<span style="font-size:var(--text-lg)">m</span></div>
+            <div class="stat-card__label">最大潮差</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__number" style="font-size:var(--text-3xl)">3.5<span style="font-size:var(--text-lg)">m/s</span></div>
+            <div class="stat-card__label">峰值流速</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__number" style="font-size:var(--text-3xl)">40<span style="font-size:var(--text-lg)">%</span></div>
+            <div class="stat-card__label">冲击力降低</div>
+            <div class="stat-card__sublabel">船形桥墩效率</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card__number" style="font-size:var(--text-3xl)">15<span style="font-size:var(--text-lg)">MPa</span></div>
+            <div class="stat-card__label">牡蛎胶结强度</div>
+            <div class="stat-card__sublabel">≈现代混凝土</div>
+          </div>
+        </div>
+      </div>
+      <div class="chart-container">
+        <div class="chart-container__title">洛阳江口24小时潮汐模拟</div>
+        <div class="chart-container__subtitle">典型半日潮潮位变化曲线（模拟数据）</div>
+        <div class="chart-box" id="chart-tidal"></div>
+      </div>
+    </div>
+
+    <!-- 古今桥梁对比 -->
+    <div class="reveal" style="margin-top:var(--space-8)">
+      <h3 style="text-align:center;color:var(--color-text-heading);margin-bottom:var(--space-8);font-size:var(--text-2xl)">古今中外桥梁工程对比</h3>
+      <div class="grid grid--2" style="gap:var(--space-8)">
+        <div class="chart-container">
+          <div class="chart-container__title">桥梁长度对比</div>
+          <div class="chart-container__subtitle">洛阳桥在同时代（宋元）桥梁中的规模地位</div>
+          <div class="chart-box" id="chart-comparison"></div>
+        </div>
+        <div class="table-wrapper" style="align-self:start;padding:var(--space-6)">
+          <h4 style="color:var(--color-text-heading);margin-bottom:var(--space-4)">详细参数比较</h4>
+          <table class="data-table" id="comparison-table"></table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 篇章五：结构解剖 ========== -->
+<section class="section section--dark" id="structure">
+  <div class="container">
+    <div class="section__header reveal">
+      <span class="section__chapter-num">篇章五</span>
+      <h2 class="section__title">结构解剖</h2>
+      <p class="section__subtitle">石梁之上与石梁之下——洛阳桥六层结构交互拆解</p>
+    </div>
+
+    <div class="grid grid--asymmetric-reverse reveal" style="align-items:start">
+      <!-- 左：SVG 桥梁截面 -->
+      <div>
+        <div id="bridge-cross-section" style="margin-bottom:var(--space-6)"></div>
+        <p style="text-align:center;font-size:var(--text-xs);color:var(--color-text-muted)">
+          ▲ 洛阳桥横截面结构示意图（点击右侧图层可高亮对应结构）
+        </p>
+      </div>
+
+      <!-- 右：分层说明 -->
+      <div>
+        <div class="layer-diagram" id="layer-diagram"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 篇章六：文化传承 ========== -->
+<section class="section section--alt" id="heritage">
+  <div class="container">
+    <div class="section__header reveal">
+      <span class="section__chapter-num">篇章六</span>
+      <h2 class="section__title">文化传承</h2>
+      <p class="section__subtitle">千年古桥今犹在——从全国重点文保到世界文化遗产</p>
+    </div>
+
+    <div class="grid grid--3 reveal-stagger" style="margin-bottom:var(--space-16)">
+      <div class="card" style="text-align:center">
+        <div style="font-size:2.5rem;margin-bottom:var(--space-4)">🏛️</div>
+        <div class="card__title">全国重点文物保护单位</div>
+        <div class="card__value" style="font-size:var(--text-3xl)">1988</div>
+        <p class="card__desc">国务院第三批全国重点文物保护单位</p>
+      </div>
+      <div class="card" style="text-align:center">
+        <div style="font-size:2.5rem;margin-bottom:var(--space-4)">🌍</div>
+        <div class="card__title">世界文化遗产</div>
+        <div class="card__value" style="font-size:var(--text-3xl)">2021</div>
+        <p class="card__desc">"泉州：宋元中国的世界海洋商贸中心"组成部分</p>
+      </div>
+      <div class="card" style="text-align:center">
+        <div style="font-size:2.5rem;margin-bottom:var(--space-4)">🔧</div>
+        <div class="card__title">历代修缮</div>
+        <div class="card__value" style="font-size:var(--text-3xl)" data-count="16">0</div>
+        <div class="stat-card__sublabel">自1174年起共16次大修</div>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <div class="chart-container">
+        <div class="chart-container__title">千年修缮历程</div>
+        <div class="chart-container__subtitle">南宋至今的16次重大修缮记录（气泡大小代表修缮规模）</div>
+        <div class="chart-box" id="chart-restoration"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 篇章七：尾声 ========== -->
+<section class="section section--dark" id="finale">
+  <div class="container container--narrow">
+    <div class="section__header reveal">
+      <span class="section__chapter-num">篇章七</span>
+      <h2 class="section__title">数据背后的中国智慧</h2>
+    </div>
+
+    <div class="reveal" style="margin-bottom:var(--space-16)">
+      <div class="quote" style="border-left-color:var(--color-tide)">
+        <p class="quote__text" style="font-size:var(--text-2xl)">
+          洛阳桥不仅是一座桥，它是中国古代工匠以超越时代的智慧，在大海之上书写的一部力学教科书。
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid--2 reveal-stagger" style="margin-bottom:var(--space-16)">
+      <div class="stat-card">
+        <div class="stat-card__number" style="color:var(--color-tide-light)" data-count="700" data-suffix="年">0</div>
+        <div class="stat-card__label">领先西方筏型基础技术</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__number" style="color:var(--color-tide-light)" data-count="966" data-suffix="年">0</div>
+        <div class="stat-card__label">持续屹立至今</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__number" style="color:var(--color-tide-light)" data-count="500" data-suffix="块">0</div>
+        <div class="stat-card__label">石板梁横跨洛阳江</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__number" style="color:var(--color-tide-light)">1st</div>
+        <div class="stat-card__label">人类首个生物+工程融合的大型基建</div>
+      </div>
+    </div>
+
+    <!-- 参考文献 -->
+    <div class="reveal">
+      <h3 style="color:var(--color-text-heading);margin-bottom:var(--space-6);font-size:var(--text-xl)">📚 参考文献与数据来源</h3>
+      <ul class="ref-list" id="ref-list"></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 页脚 ========== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__content">
+      <div class="footer__title">跨海飞虹</div>
+      <div class="footer__subtitle">泉州洛阳桥古代海洋工程交互图鉴</div>
+      <p style="font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-4)">
+        2026年（第19届）中国大学生计算机设计大赛 · 第6大类：信息可视化设计
+      </p>
+      <p style="font-size:var(--text-sm);color:var(--color-text-muted)">
+        主题：中国古代建筑成就 —— 中华优秀传统文化系列之六
+      </p>
+      <div class="footer__credits">
+        <p>© 2026 跨海飞虹项目组 · 数据来源标注详见参考文献 · 本作品仅用于学术竞赛</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- 返回顶部 -->
+<button class="back-to-top" aria-label="返回顶部">↑</button>
+
+<!-- ========== Scripts ========== -->
+<script src="js/data.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/scroll-animations.js"></script>
+<script src="js/bridge-interactive.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+// === 动态生成：时间线 ===
+document.addEventListener('DOMContentLoaded', () => {
+  const tlContainer = document.getElementById('construction-timeline');
+  if (tlContainer) {
+    BridgeData.timeline.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'timeline__item';
+      div.innerHTML = `
+        <div class="timeline__dot ${item.highlight ? 'timeline__dot--highlight' : ''}"></div>
+        <div class="timeline__year">${item.year}</div>
+        <div class="timeline__title">${item.event}</div>
+        <div class="timeline__desc">${item.detail}</div>
+      `;
+      tlContainer.appendChild(div);
+    });
+  }
+
+  // === 动态生成：分层结构 ===
+  const layerContainer = document.getElementById('layer-diagram');
+  if (layerContainer) {
+    BridgeData.structureLayers.forEach(layer => {
+      const div = document.createElement('div');
+      div.className = 'layer-diagram__item';
+      div.dataset.layer = layer.id;
+      div.innerHTML = `
+        <div class="layer-diagram__visual" style="background:${layer.color}"></div>
+        <div class="layer-diagram__info">
+          <div class="layer-diagram__label">${layer.name}</div>
+          <div class="layer-diagram__detail"><p style="margin-top:var(--space-2);font-size:var(--text-sm);color:var(--color-text-secondary);line-height:1.7">${layer.description}</p></div>
+        </div>
+      `;
+      layerContainer.appendChild(div);
+    });
+  }
+
+  // === 动态生成：对比表格 ===
+  const table = document.getElementById('comparison-table');
+  if (table) {
+    const thead = '<thead><tr><th>桥梁</th><th>建成</th><th>国家</th><th>长度</th><th>材料</th></tr></thead>';
+    const tbody = '<tbody>' + BridgeData.comparison.map(d =>
+      `<tr><td style="color:var(--color-text-primary);font-weight:600">${d.name}</td><td>${d.year}年</td><td>${d.country}</td><td>${d.length}m</td><td>${d.material}</td></tr>`
+    ).join('') + '</tbody>';
+    table.innerHTML = thead + tbody;
+  }
+
+  // === 动态生成：参考文献 ===
+  const refList = document.getElementById('ref-list');
+  if (refList) {
+    BridgeData.references.forEach(ref => {
+      const li = document.createElement('li');
+      li.innerHTML = `<span class="ref-list__num">[${ref.id}]</span><span>${ref.author}. ${ref.title}. ${ref.year}. [${ref.type}]</span>`;
+      refList.appendChild(li);
+    });
+  }
+});
+</script>
+
+</body>
+</html>

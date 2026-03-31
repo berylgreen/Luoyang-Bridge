@@ -1,0 +1,251 @@
+/* ============================================================
+   跨海飞虹 — 设计系统基础
+   Design System: 宋韵海工 (Song Dynasty Marine Engineering)
+   ============================================================ */
+
+/* ---------- Google Fonts ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+/* ---------- CSS Custom Properties ---------- */
+:root {
+  /* ===== 色彩系统 (Color Palette) ===== */
+  
+  /* 主色 — 深海靛蓝 */
+  --color-primary-900: hsl(220, 55%, 8%);
+  --color-primary-800: hsl(220, 50%, 12%);
+  --color-primary-700: hsl(220, 48%, 16%);
+  --color-primary-600: hsl(220, 45%, 22%);
+  --color-primary-500: hsl(220, 42%, 28%);
+  --color-primary-400: hsl(220, 38%, 38%);
+  --color-primary-300: hsl(220, 32%, 50%);
+  --color-primary-200: hsl(220, 28%, 65%);
+  --color-primary-100: hsl(220, 22%, 82%);
+  
+  /* 强调色 — 牡蛎白金 */
+  --color-accent-gold: hsl(42, 70%, 62%);
+  --color-accent-gold-light: hsl(42, 65%, 75%);
+  --color-accent-gold-dim: hsl(42, 50%, 45%);
+  --color-accent-gold-glow: hsla(42, 70%, 62%, 0.3);
+  
+  /* 强调色 — 古铜赤 */
+  --color-accent-copper: hsl(15, 65%, 50%);
+  --color-accent-copper-light: hsl(15, 55%, 65%);
+  --color-accent-copper-dim: hsl(15, 45%, 35%);
+  
+  /* 辅助色 — 石桥青灰 */
+  --color-stone: hsl(200, 12%, 42%);
+  --color-stone-light: hsl(200, 10%, 58%);
+  --color-stone-dark: hsl(200, 15%, 28%);
+  
+  /* 辅助色 — 潮水碧 */
+  --color-tide: hsl(185, 45%, 35%);
+  --color-tide-light: hsl(185, 40%, 50%);
+  --color-tide-glow: hsla(185, 50%, 40%, 0.25);
+  
+  /* 语义色 */
+  --color-text-primary: hsl(40, 20%, 90%);
+  --color-text-secondary: hsl(220, 15%, 68%);
+  --color-text-muted: hsl(220, 10%, 48%);
+  --color-text-heading: hsl(42, 55%, 80%);
+  --color-bg-body: hsl(220, 55%, 6%);
+  --color-bg-section: hsl(220, 48%, 9%);
+  --color-bg-card: hsla(220, 45%, 14%, 0.65);
+  --color-bg-card-hover: hsla(220, 45%, 18%, 0.75);
+  --color-border: hsla(220, 30%, 35%, 0.3);
+  --color-border-accent: hsla(42, 70%, 62%, 0.25);
+  --color-divider: hsla(220, 25%, 30%, 0.4);
+  
+  /* 覆盖 & 玻璃态 */
+  --glass-bg: hsla(220, 50%, 12%, 0.55);
+  --glass-border: hsla(220, 30%, 45%, 0.2);
+  --glass-shadow: 0 8px 32px hsla(220, 60%, 4%, 0.5);
+  --glass-blur: blur(20px);
+  
+  /* ===== 字体系统 (Typography) ===== */
+  --font-serif: 'Noto Serif SC', 'Songti SC', 'STSong', serif;
+  --font-sans: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  
+  /* 字号阶梯 */
+  --text-xs: 0.75rem;    /* 12px */
+  --text-sm: 0.875rem;   /* 14px */
+  --text-base: 1rem;     /* 16px */
+  --text-lg: 1.125rem;   /* 18px */
+  --text-xl: 1.25rem;    /* 20px */
+  --text-2xl: 1.5rem;    /* 24px */
+  --text-3xl: 1.875rem;  /* 30px */
+  --text-4xl: 2.25rem;   /* 36px */
+  --text-5xl: 3rem;      /* 48px */
+  --text-6xl: 3.75rem;   /* 60px */
+  --text-7xl: 4.5rem;    /* 72px */
+  --text-display: clamp(3rem, 6vw, 6rem);
+  
+  /* 行高 */
+  --leading-tight: 1.25;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.8;
+  --leading-loose: 2.0;
+  
+  /* 字重 */
+  --weight-light: 300;
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-black: 900;
+  
+  /* ===== 间距系统 (Spacing) ===== */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+  --space-section: clamp(4rem, 10vh, 8rem);
+  
+  /* ===== 圆角系统 ===== */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+  
+  /* ===== 阴影系统 ===== */
+  --shadow-sm: 0 1px 3px hsla(220, 60%, 4%, 0.3);
+  --shadow-md: 0 4px 12px hsla(220, 60%, 4%, 0.4);
+  --shadow-lg: 0 8px 24px hsla(220, 60%, 4%, 0.5);
+  --shadow-xl: 0 16px 48px hsla(220, 60%, 4%, 0.6);
+  --shadow-glow-gold: 0 0 30px hsla(42, 70%, 62%, 0.15);
+  --shadow-glow-tide: 0 0 30px hsla(185, 50%, 40%, 0.15);
+  
+  /* ===== 过渡系统 ===== */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 200ms;
+  --duration-normal: 350ms;
+  --duration-slow: 600ms;
+  --duration-slower: 1000ms;
+  
+  /* ===== 层级系统 ===== */
+  --z-base: 1;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+}
+
+/* ---------- CSS Reset & Base ---------- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary-500) var(--color-primary-900);
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: var(--weight-normal);
+  line-height: var(--leading-normal);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-body);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-primary-900);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary-400);
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent-gold-dim);
+}
+
+/* ---------- Typography Base ---------- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  color: var(--color-text-heading);
+  line-height: var(--leading-tight);
+  font-weight: var(--weight-bold);
+}
+
+h1 { font-size: var(--text-display); font-weight: var(--weight-black); }
+h2 { font-size: var(--text-5xl); }
+h3 { font-size: var(--text-3xl); }
+h4 { font-size: var(--text-2xl); }
+h5 { font-size: var(--text-xl); }
+h6 { font-size: var(--text-lg); }
+
+p {
+  font-family: var(--font-serif);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-secondary);
+}
+
+a {
+  color: var(--color-accent-gold);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-in-out);
+}
+a:hover {
+  color: var(--color-accent-gold-light);
+}
+
+strong { font-weight: var(--weight-semibold); color: var(--color-text-primary); }
+
+/* Selection */
+::selection {
+  background: hsla(42, 70%, 62%, 0.3);
+  color: var(--color-text-primary);
+}
+
+/* ---------- Utility Classes ---------- */
+.text-gold { color: var(--color-accent-gold); }
+.text-copper { color: var(--color-accent-copper); }
+.text-tide { color: var(--color-tide-light); }
+.text-muted { color: var(--color-text-muted); }
+.text-center { text-align: center; }
+
+.font-serif { font-family: var(--font-serif); }
+.font-sans { font-family: var(--font-sans); }
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}

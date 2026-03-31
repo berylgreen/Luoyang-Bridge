@@ -1,0 +1,221 @@
+/* ============================================================
+   洛阳桥3D交互模型 — 样式系统
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+:root {
+  --font-serif: 'Noto Serif SC', serif;
+  --font-sans: 'Noto Sans SC', sans-serif;
+  --bg: #0a0e18;
+  --surface: hsla(220,50%,12%,0.85);
+  --gold: #c9a84c;
+  --gold-light: #d4b978;
+  --text: #e8e0d4;
+  --text-sec: #9ca3af;
+  --border: hsla(220,30%,35%,0.3);
+  --border-gold: hsla(42,70%,62%,0.2);
+  --glass: hsla(220,50%,12%,0.7);
+  --blur: blur(16px);
+  --radius: 10px;
+  --ease: cubic-bezier(0.16,1,0.3,1);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text);
+  overflow: hidden;
+  height: 100vh;
+  user-select: none;
+}
+
+#app { position: relative; width: 100vw; height: 100vh; }
+#canvas-container {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+#canvas-container canvas { display: block; }
+
+/* ========== HEADER ========== */
+.header {
+  position: absolute;
+  top: 1.5rem; left: 1.5rem;
+  z-index: 10;
+  pointer-events: none;
+}
+.header__title {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+}
+.header__sub {
+  font-size: 0.75rem;
+  color: var(--text-sec);
+  margin-top: 0.3rem;
+  letter-spacing: 0.15em;
+}
+
+/* ========== INFO PANEL ========== */
+.info-panel {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  width: 320px;
+  background: var(--glass);
+  backdrop-filter: var(--blur);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  z-index: 20;
+  transition: all 0.4s var(--ease);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+.info-panel--collapsed {
+  max-height: 50px;
+  overflow: hidden;
+}
+.info-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid var(--border);
+}
+.info-panel__header h2 {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+.info-panel__close {
+  background: none;
+  border: none;
+  color: var(--text-sec);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.info-panel__close:hover { color: var(--gold); }
+.info-panel__body {
+  padding: 1.2rem;
+  font-size: 0.85rem;
+  color: var(--text-sec);
+  line-height: 1.7;
+}
+.info-panel__body p { margin-bottom: 1rem; }
+.info-panel__body strong { color: var(--text); }
+
+.info-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+.info-stat {
+  background: hsla(220,40%,15%,0.5);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.8rem;
+  text-align: center;
+}
+.info-stat__val {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gold-light);
+}
+.info-stat__unit {
+  font-size: 0.8rem;
+  color: var(--text-sec);
+  margin-left: 0.1rem;
+}
+.info-stat__label {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--text-sec);
+  margin-top: 0.2rem;
+}
+
+/* ========== STRUCTURE BAR ========== */
+.structure-bar {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  background: var(--glass);
+  backdrop-filter: var(--blur);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  z-index: 20;
+}
+.struct-btn {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--text-sec);
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+  white-space: nowrap;
+}
+.struct-btn:hover { color: var(--text); border-color: var(--border); }
+.struct-btn--active {
+  background: hsla(42,70%,62%,0.12);
+  color: var(--gold);
+  border-color: var(--border-gold);
+}
+
+/* ========== VIEW BUTTONS ========== */
+.view-btns {
+  position: absolute;
+  left: 1.5rem;
+  bottom: 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  z-index: 20;
+}
+.view-btn {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  background: var(--glass);
+  backdrop-filter: var(--blur);
+  border: 1px solid var(--border);
+  color: var(--text-sec);
+  font-family: var(--font-serif);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.view-btn:hover { border-color: var(--border-gold); color: var(--gold); }
+
+/* ========== CONTROLS HINT ========== */
+.controls-hint {
+  position: absolute;
+  left: 1.5rem;
+  bottom: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  font-size: 0.7rem;
+  color: var(--text-sec);
+  opacity: 0.5;
+  z-index: 10;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .info-panel { width: 260px; }
+  .structure-bar { flex-wrap: wrap; border-radius: var(--radius); max-width: 95vw; justify-content: center; }
+  .struct-btn { font-size: 0.7rem; padding: 0.4rem 0.7rem; }
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>古法造桥 — 洛阳桥建造模拟器 | 4C大赛参赛作品</title>
+  <meta name="description" content="2026年中国大学生计算机设计大赛(4C)参赛作品：以交互式教育游戏方式，体验北宋泉州洛阳桥的五大工程创举。第9大类·数媒游戏与交互设计。">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="game-wrapper">
+  <!-- ========== Canvas ========== -->
+  <canvas id="game-canvas"></canvas>
+
+  <!-- ========== 主菜单 ========== -->
+  <div class="screen" id="menu-screen">
+    <div class="menu">
+      <div class="menu__badge">2026 · 4C大赛 · 第9大类 · 数媒游戏与交互设计</div>
+      <h1 class="menu__title">
+        <span class="accent">古法造桥</span><br>
+        洛阳桥建造模拟器
+      </h1>
+      <p class="menu__subtitle">
+        扮演北宋工匠，在蔡襄的指挥下<br>
+        亲手建造中国第一座跨海大石桥
+      </p>
+      <button class="menu__start-btn" id="start-btn">
+        🏗️ 开始建造
+      </button>
+      <div class="menu__levels-preview">
+        <div class="level-preview">
+          <div class="level-preview__icon">🌊</div>
+          <div class="level-preview__name">观潮选址</div>
+        </div>
+        <div class="level-preview">
+          <div class="level-preview__icon">🪨</div>
+          <div class="level-preview__name">抛石筑基</div>
+        </div>
+        <div class="level-preview">
+          <div class="level-preview__icon">🦪</div>
+          <div class="level-preview__name">种蛎固基</div>
+        </div>
+        <div class="level-preview">
+          <div class="level-preview__icon">⛵</div>
+          <div class="level-preview__name">砌筑桥墩</div>
+        </div>
+        <div class="level-preview">
+          <div class="level-preview__icon">🏗️</div>
+          <div class="level-preview__name">浮运架梁</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 游戏界面 ========== -->
+  <div class="screen screen--hidden" id="game-screen">
+    <!-- HUD -->
+    <div class="hud">
+      <div class="hud__left">
+        <div>
+          <div class="hud__level-info" id="hud-level-info">第 1 关</div>
+          <div class="hud__level-title" id="hud-level-title">观潮选址</div>
+        </div>
+      </div>
+      <div class="hud__right">
+        <div class="hud__score" id="hud-score">⭐ 0</div>
+        <div class="hud__timer" id="hud-timer">⏱ 30s</div>
+        <button class="hud__btn" id="pause-btn" title="暂停">⏸</button>
+      </div>
+    </div>
+    <!-- Progress -->
+    <div class="progress-bar"><div class="progress-bar__fill" id="progress-fill" style="width:0%"></div></div>
+    <!-- Instruction -->
+    <div class="instruction-bar" id="instruction-bar">点击画面开始游戏</div>
+  </div>
+
+  <!-- ========== 关卡介绍 ========== -->
+  <div class="level-intro" id="level-intro">
+    <div class="level-intro__num" id="intro-num">第 1 关 · 共 5 关</div>
+    <h2 class="level-intro__title" id="intro-title">🌊 观潮选址</h2>
+    <p class="level-intro__desc" id="intro-desc">洛阳江入海口潮汐汹涌…</p>
+    <div class="level-intro__tip" id="intro-tip">💡 操作提示</div>
+    <button class="dialog__btn" id="intro-start-btn" style="opacity:0;animation:fadeSlideUp 0.6s var(--ease) 1.4s both">
+      准备出发 →
+    </button>
+  </div>
+
+  <!-- ========== 对话框 ========== -->
+  <div class="dialog-overlay" id="dialog-overlay">
+    <div class="dialog">
+      <div class="dialog__icon" id="dialog-icon">🎉</div>
+      <div class="dialog__title" id="dialog-title">关卡完成！</div>
+      <div class="dialog__text" id="dialog-text">得分信息</div>
+      <div class="dialog__actions" id="dialog-actions"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script src="js/game-data.js"></script>
+<script src="js/game-engine.js"></script>
+<script src="js/game-levels.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

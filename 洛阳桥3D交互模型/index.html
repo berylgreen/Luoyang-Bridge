@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>洛阳桥3D交互模型 — 泉州洛阳桥三维结构展示</title>
+  <meta name="description" content="基于Three.js的泉州洛阳桥交互式3D结构模型，支持360°旋转、结构标注与剖面展示。">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- 3D Canvas -->
+    <div id="canvas-container"></div>
+
+    <!-- 左上角标题 -->
+    <div class="header">
+      <h1 class="header__title">洛阳桥 · 3D模型</h1>
+      <p class="header__sub">泉州 · 北宋 · 公元1053-1059</p>
+    </div>
+
+    <!-- 右侧信息面板 -->
+    <div class="info-panel" id="info-panel">
+      <div class="info-panel__header">
+        <h2 id="info-title">洛阳桥概览</h2>
+        <button class="info-panel__close" id="info-close">✕</button>
+      </div>
+      <div class="info-panel__body" id="info-body">
+        <p>洛阳桥，又名万安桥，位于福建省泉州市洛阳江入海口。北宋皇祐五年至嘉祐四年（1053-1059年）由泉州知府蔡襄主持建造。</p>
+        <div class="info-stats">
+          <div class="info-stat"><span class="info-stat__val">834</span><span class="info-stat__unit">米</span><span class="info-stat__label">全长</span></div>
+          <div class="info-stat"><span class="info-stat__val">7</span><span class="info-stat__unit">米</span><span class="info-stat__label">桥宽</span></div>
+          <div class="info-stat"><span class="info-stat__val">46</span><span class="info-stat__unit">座</span><span class="info-stat__label">桥墩</span></div>
+          <div class="info-stat"><span class="info-stat__val">500+</span><span class="info-stat__unit">块</span><span class="info-stat__label">石板梁</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部结构选择器 -->
+    <div class="structure-bar">
+      <button class="struct-btn struct-btn--active" data-part="all">🌉 整体</button>
+      <button class="struct-btn" data-part="foundation">🪨 筏型基础</button>
+      <button class="struct-btn" data-part="pier">⛵ 船形桥墩</button>
+      <button class="struct-btn" data-part="beam">📐 石板梁</button>
+      <button class="struct-btn" data-part="railing">🦁 栏杆石狮</button>
+      <button class="struct-btn" data-part="oyster">🦪 种蛎固基</button>
+    </div>
+
+    <!-- 左下角控制提示 -->
+    <div class="controls-hint">
+      <span>🖱️ 拖拽旋转</span>
+      <span>🔭 滚轮缩放</span>
+      <span>🤚 右键平移</span>
+    </div>
+
+    <!-- 视角快捷键 -->
+    <div class="view-btns">
+      <button class="view-btn" data-view="front" title="正面">正</button>
+      <button class="view-btn" data-view="side" title="侧面">侧</button>
+      <button class="view-btn" data-view="top" title="俯视">俯</button>
+      <button class="view-btn" data-view="section" title="剖面">剖</button>
+      <button class="view-btn" data-view="perspective" title="透视">3D</button>
+    </div>
+  </div>
+  <!-- Three.js Import Map -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
